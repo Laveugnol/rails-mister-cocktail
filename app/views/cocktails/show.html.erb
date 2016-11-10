@@ -1,0 +1,36 @@
+
+
+<ul>
+  <li><h2><%= @cocktail.name %></h2></li>
+</ul>
+<hr>
+
+
+<%= simple_form_for [@cocktail, @dose] do |f| %>
+<%= f.input :description ,input_html: { class: 'mannequin' }%>
+<%= f.association :ingredient %>
+<%= f.submit %>
+<% end %>
+
+<ul>
+  <% if @cocktail.doses != []%>
+  <h2>Il vous faut:</h2>
+
+  <% @cocktail.doses.each do |dose| %>
+  <li><h2><%= dose.description %>  de <%= dose.ingredient.name %>     <%= link_to "Une dose en moins", cocktail_dose_path(@cocktail, dose),
+      method: :delete,
+      data: { confirm: "Lopette!" } %></h2>
+
+
+  </li>
+
+  <% end %>
+  <% end %>
+</ul>
+
+
+<%= link_to "Menu", cocktails_path, class: "btn btn-primary"%>
+
+<!--  <% Ingredient.all.each do |ingredient| %>
+<%= ingredient.name%>
+<%end%> -->
