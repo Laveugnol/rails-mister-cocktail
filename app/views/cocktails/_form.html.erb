@@ -1,4 +1,22 @@
-<%= simple_form_for [@cocktail] do |f| %>
-  <%= f.input :name %>
-  <%= f.submit "Create a cocktail", class: "btn btn-primary" %> <%= link_to "Back to list", cocktails_path, class: "btn btn-primary"%>
-<% end %>
+
+
+<div class="container creation">
+  <div class="row">
+
+    <div class="col-xs-12 col-sm-4 col-sm-offset-4">
+
+      <div class="form-login" id="centerbuttons">
+      <h3 class="text-center">Créativité...</h3>
+
+          <%= simple_form_for [@cocktail] do |f| %>
+          <%= f.input :name ,label: 'Give me a name'%>
+          <%= f.input :photo ,label: 'Kesako'%>
+          <%= f.input :photo_cache, as: :hidden %>
+          <%= f.submit "Create a cocktail", class: "btn-yours2" %>
+          <% end %>
+
+        </div>
+
+      </div>
+    </div>
+  </div>

@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  # get 'review/new'
+
+  # get 'review/create'
+
   # get 'doses/new'
 
   # get 'doses/create'
@@ -22,6 +26,7 @@ Rails.application.routes.draw do
   # # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   resources :cocktails do
+    resources :reviews, only: [:new, :create]
     resources :doses, only: [:new, :create, :destroy]
   end
 

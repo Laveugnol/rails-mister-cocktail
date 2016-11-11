@@ -4,11 +4,22 @@
 
 
 
-<ul>
-<% @cocktails.each do |cocktail| %>
-  <li><h2><%= cocktail.name %></h2></li>
 
- <%= link_to "See details", cocktail, class: "btn btn-primary"%>
- <hr>
-<% end %>
-</ul>
+
+
+
+<div class="wrapper display-home">
+<div class="container">
+  <div class="row">
+  <% @cocktails.each do |c| %>
+    <div class="col-xs-12 col-sm-4 col-lg-3">
+
+        <%= render "cocktail", cocktail: c %>
+
+    </div>
+     <% end %>
+  </div>
+</div>
+</div>
+
+

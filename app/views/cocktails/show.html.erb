@@ -7,63 +7,113 @@
 <%= @cocktail.doses %>
 <% end %>
 
-
-<div class="text-center">
-  <div class="container">
-    <div class="row ">
-      <div class="col-xs-12">
-
-        <h1><%= @cocktail.name %> <%= link_to cocktail_path(@cocktail),
-          method: :delete,
-          data: { confirm: "Beurk?" } do%>
-          <i class="fa fa-trash-o"></i>
+<div class="wrapper ">
+  <div class="text-center">
+    <div class="container" >
+      <div class="row ">
+        <div class="col-xs-12 ">
+          <h1 class="adaptation"><%= @cocktail.name %> <%= link_to cocktail_path(@cocktail),
+            method: :delete,
+            data: { confirm: "Beurk?" } do%>
+            <i class="fa fa-trash-o"></i>
+            <%end%>
+            <%= link_to  edit_cocktail_path(@cocktail) do  %>
+            <i class="fa fa-pencil"></i>
+            <%end%>
+          </h1>
+        </div>
+        <div class="col-xs-12">
+          <% if @cocktail.photo?%>
+          <%= image_tag @cocktail.photo.url(:standard) %>
           <%end%>
-          <%= link_to  edit_cocktail_path(@cocktail) do  %>
-          <i class="fa fa-pencil"></i>
-          <%end%>
-        </h1>
-
+        </div>
       </div>
     </div>
   </div>
 
-</div>
+  <hr>
 
-<hr>
-
-<div class="container">
-  <div class="row ">
-    <div class="col-xs-12 col-sm-6">
-
-      <%= simple_form_for [@cocktail, @dose] do |f| %>
-      <%= f.input :description ,input_html: { class: 'mannequin' } %>
-      <%= f.association :ingredient,input_html: { class: 'mannequin' } %>
-      <%= f.button :submit, "Complexification!", class: "btn-yours2" %>
-      <% end %>
-
-    </div>
-
-
-    <div class="col-xs-12 col-sm-6">
-
-      <ul>
-        <% if @cocktail.doses != []%>
-        <h2>Il vous faut:</h2>
-
-        <% @cocktail.doses.each do |dose| %>
-        <li><h3><%= dose.description %>  de <%= dose.ingredient.name %>     <%= link_to cocktail_dose_path(@cocktail, dose),
-          method: :delete,
-          data: { confirm: "Lopette!" } do%>
-          <i class="fa fa-trash-o"></i>
-          <%end%></h3>
-        </li>
-
+  <div class="container"  >
+    <div class="row ">
+      <div class="col-xs-12 col-sm-6">
+        <%= simple_form_for [@cocktail, @dose] do |f| %>
+        <%= f.input :description ,input_html: { class: 'mannequin' } %>
+        <%= f.association :ingredient,input_html: { class: 'mannequin' } %>
+        <%= f.button :submit, "Complexification!", class: "btn-yours2" %>
         <% end %>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+
+        <ul>
+          <% if @cocktail.doses != []%>
+          <h2>Il vous faut:</h2>
+
+          <% @cocktail.doses.each do |dose| %>
+          <li><h3><%= dose.description %>  de <%= dose.ingredient.name %>     <%= link_to cocktail_dose_path(@cocktail, dose),
+            method: :delete,
+            data: { confirm: "Lopette!" } do%>
+            <i class="fa fa-trash-o"></i>
+            <%end%></h3>
+          </li>
+          <% end %>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div class="container">
+    <div class="row ">
+      <div class="col-xs-12 col-sm-6" id= "review">
+       <%= simple_form_for [@cocktail, @review] do |f| %>
+       <%= f.input :content ,input_html: { class: 'mannequin',id: "contenu" }%>
+       <%= f.submit "Qu'en dites-vous?", class: "btn-yours2" %>
+       <% end %>
+     </div>
+     <div class="col-xs-12 col-sm-6 review" >
+       <% if @cocktail.reviews != []%>
+       <h2>Ce que nos Drinkers en pensent:</h2>
+       <ul>
+        <% @cocktail.reviews.each do |review| %>
+        <li><p><%= review.content %></p></li>
         <% end %>
       </ul>
+      <% end %>
     </div>
   </div>
 </div>
+</div>
+
+
+
+
+<!-- script>
+$(document).ready(function() {
+
+  $("#review").on("submit", function(event) {
+    event.preventDefault();
+    console.log('remote true');
+  var contenu = $('#contenu').val();
+  $('.review ul').prepend("<li>" + contenu + "</li>");
+
+   $.ajax({
+     type: "POST",
+     url: cocktail_reviews_path,
+     data: {content: contenu},
+     success: function(data) {
+        alert('success');
+        console.log('yeah');
+      }
+   });
+
+
+  return false;
+  });
+
+});
+
+
+</script> -->
 
 
 
