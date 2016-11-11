@@ -1,36 +1,70 @@
-
-
-<ul>
-  <li><h2><%= @cocktail.name %></h2></li>
-</ul>
-<hr>
-
-
-<%= simple_form_for [@cocktail, @dose] do |f| %>
-<%= f.input :description ,input_html: { class: 'mannequin' }%>
-<%= f.association :ingredient %>
-<%= f.submit %>
+<% content_for(:title) do %>
+<%= @cocktail.name %> avec modération siouplait
 <% end %>
 
-<ul>
-  <% if @cocktail.doses != []%>
-  <h2>Il vous faut:</h2>
 
-  <% @cocktail.doses.each do |dose| %>
-  <li><h2><%= dose.description %>  de <%= dose.ingredient.name %>     <%= link_to "Une dose en moins", cocktail_dose_path(@cocktail, dose),
-      method: :delete,
-      data: { confirm: "Lopette!" } %></h2>
+<% content_for(:description) do %>
+<%= @cocktail.doses %>
+<% end %>
 
 
-  </li>
+<div class="text-center">
+  <div class="container">
+    <div class="row ">
+      <div class="col-xs-12">
 
-  <% end %>
-  <% end %>
-</ul>
+        <h1><%= @cocktail.name %> <%= link_to cocktail_path(@cocktail),
+          method: :delete,
+          data: { confirm: "Beurk?" } do%>
+          <i class="fa fa-trash-o"></i>
+          <%end%>
+          <%= link_to  edit_cocktail_path(@cocktail) do  %>
+          <i class="fa fa-pencil"></i>
+          <%end%>
+        </h1>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<hr>
+
+<div class="container">
+  <div class="row ">
+    <div class="col-xs-12 col-sm-6">
+
+      <%= simple_form_for [@cocktail, @dose] do |f| %>
+      <%= f.input :description ,input_html: { class: 'mannequin' } %>
+      <%= f.association :ingredient,input_html: { class: 'mannequin' } %>
+      <%= f.button :submit, "Complexification!", class: "btn-yours2" %>
+      <% end %>
+
+    </div>
 
 
-<%= link_to "Menu", cocktails_path, class: "btn btn-primary"%>
+    <div class="col-xs-12 col-sm-6">
 
-<!--  <% Ingredient.all.each do |ingredient| %>
-<%= ingredient.name%>
-<%end%> -->
+      <ul>
+        <% if @cocktail.doses != []%>
+        <h2>Il vous faut:</h2>
+
+        <% @cocktail.doses.each do |dose| %>
+        <li><h3><%= dose.description %>  de <%= dose.ingredient.name %>     <%= link_to cocktail_dose_path(@cocktail, dose),
+          method: :delete,
+          data: { confirm: "Lopette!" } do%>
+          <i class="fa fa-trash-o"></i>
+          <%end%></h3>
+        </li>
+
+        <% end %>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>
+
+
+
+
